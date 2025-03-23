@@ -1,31 +1,39 @@
 {
   "name": "@mastashake08/terrain-generator",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "1.1.2",
+  "description": "A Vue 3 component for generating realistic terrain with GLTF export capabilities.",
+  "main": "dist/vue-terrain-generator.umd.js",
+  "module": "dist/vue-terrain-generator.es.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/vue-terrain-generator.es.js",
+      "require": "./dist/vue-terrain-generator.umd.js"
+    }
+  },
   "scripts": {
     "build": "vite build",
     "dev": "vite",
     "test": "vitest",
     "type-check": "vue-tsc --noEmit"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "simplex-noise": "^4.0.3",
-    "three": "^0.174.0",
-    "vue": "^3.5.13"
+    "three": "^0.155.0",
+    "simplex-noise": "^3.0.0"
   },
   "devDependencies": {
-    "@types/node": "^22.13.11",
-    "@types/three": "^0.174.0",
-    "@vitejs/plugin-vue": "^5.2.3",
-    "@vue/test-utils": "^2.4.6",
-    "jsdom": "^26.0.0",
-    "typescript": "^5.8.2",
-    "vite": "^6.2.2",
-    "vitest": "^3.0.9",
-    "vue-tsc": "^2.2.8"
-  }
+    "typescript": "^4.9.0",
+    "vue": "^3.2.0",
+    "vite": "^4.0.0",
+    "vue-tsc": "^1.0.0",
+    "vitest": "^0.32.0",
+    "@vitejs/plugin-vue": "^4.0.0"
+  },
+  "peerDependencies": {
+    "vue": "^3.2.0"
+  },
+  "license": "MIT"
 }
