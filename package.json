@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "build": "vite build",
-  "dev": "vite",
-  "test": "vitest",
-  "type-check": "vue-tsc --noEmit"
-},
+    "build": "vite build",
+    "dev": "vite",
+    "test": "vitest",
+    "type-check": "vue-tsc --noEmit"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -22,6 +22,7 @@
     "@types/three": "^0.174.0",
     "@vitejs/plugin-vue": "^5.2.3",
     "@vue/test-utils": "^2.4.6",
+    "jsdom": "^26.0.0",
     "typescript": "^5.8.2",
     "vite": "^6.2.2",
     "vitest": "^3.0.9",

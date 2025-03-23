@@ -9,7 +9,7 @@
   import { onMounted, ref, onUnmounted } from 'vue'
   import * as THREE from 'three'
   import { GLTFExporter } from 'three/examples/jsm/exporters/GLTFExporter'
-  import SimplexNoise from 'simplex-noise'
+  import {createNoise2D} from 'simplex-noise'
   
   // Define Prop Types
   interface TexturePaths {
@@ -38,7 +38,7 @@
   let terrain: THREE.Mesh, animationId: number
   const textureCache = new Map<string, THREE.Texture>()
   
-  const noiseGenerator = new SimplexNoise()
+  const noiseGenerator =  createNoise2D()
   
   // Generate terrain using noise
   function generateTerrain(geometry: THREE.PlaneGeometry) {
