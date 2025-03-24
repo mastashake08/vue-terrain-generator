@@ -1,6 +1,6 @@
 {
   "name": "@mastashake08/terrain-generator",
-  "version": "1.1.2",
+  "version": "1.1.8",
   "description": "A Vue 3 component for generating realistic terrain with GLTF export capabilities.",
   "main": "dist/vue-terrain-generator.umd.js",
   "module": "dist/vue-terrain-generator.es.js",

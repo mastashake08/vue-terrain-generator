@@ -1,8 +1,8 @@
-import { defineComponent as se, ref as ne, onMounted as ie, onUnmounted as re, createElementBlock as oe, openBlock as ae, createElementVNode as Y } from "vue";
-import * as S from "three";
-import { Color as ce, Matrix4 as $, Vector3 as z, Quaternion as le, BufferAttribute as L, REVISION as ue, CompressedTexture as P, Source as fe, NoColorSpace as he, MathUtils as V, RGBAFormat as pe, DoubleSide as de, PropertyBinding as B, InterpolateDiscrete as xe, Scene as K, SRGBColorSpace as ge, NearestFilter as ye, NearestMipmapNearestFilter as Te, NearestMipmapLinearFilter as we, LinearFilter as me, LinearMipmapNearestFilter as Me, LinearMipmapLinearFilter as Ae, ClampToEdgeWrapping as Ee, RepeatWrapping as Ie, MirroredRepeatWrapping as Re, InterpolateLinear as be } from "three";
-import Ne from "simplex-noise";
-const W = {
+import { defineComponent as ne, ref as ie, reactive as re, onMounted as oe, nextTick as Y, onUnmounted as ae, createElementBlock as ce, openBlock as le, createElementVNode as K } from "vue";
+import * as N from "three";
+import { Color as ue, Matrix4 as ee, Vector3 as z, Quaternion as fe, BufferAttribute as _, REVISION as he, CompressedTexture as k, Source as pe, NoColorSpace as de, MathUtils as V, RGBAFormat as xe, DoubleSide as ge, PropertyBinding as B, InterpolateDiscrete as ye, Scene as W, SRGBColorSpace as Te, NearestFilter as me, NearestMipmapNearestFilter as we, NearestMipmapLinearFilter as Me, LinearFilter as Ae, LinearMipmapNearestFilter as Ee, LinearMipmapLinearFilter as Ie, ClampToEdgeWrapping as Re, RepeatWrapping as be, MirroredRepeatWrapping as Se, InterpolateLinear as Ne } from "three";
+import Le from "simplex-noise";
+const q = {
   POSITION: [
     "byte",
     "byte normalized",
@@ -33,33 +33,33 @@ const W = {
 class G {
   constructor() {
     this.textureUtils = null, this.pluginCallbacks = [], this.register(function(e) {
-      return new Be(e);
+      return new De(e);
     }), this.register(function(e) {
-      return new Ge(e);
-    }), this.register(function(e) {
-      return new He(e);
-    }), this.register(function(e) {
-      return new Ve(e);
+      return new ke(e);
     }), this.register(function(e) {
       return new je(e);
     }), this.register(function(e) {
       return new Ye(e);
     }), this.register(function(e) {
-      return new De(e);
-    }), this.register(function(e) {
-      return new Pe(e);
-    }), this.register(function(e) {
-      return new ke(e);
-    }), this.register(function(e) {
       return new Ke(e);
     }), this.register(function(e) {
       return new We(e);
+    }), this.register(function(e) {
+      return new Pe(e);
+    }), this.register(function(e) {
+      return new He(e);
+    }), this.register(function(e) {
+      return new Ve(e);
     }), this.register(function(e) {
       return new qe(e);
     }), this.register(function(e) {
       return new Xe(e);
     }), this.register(function(e) {
       return new Je(e);
+    }), this.register(function(e) {
+      return new Ze(e);
+    }), this.register(function(e) {
+      return new $e(e);
     });
   }
   register(e) {
@@ -80,15 +80,15 @@ class G {
    * @param  {Object} options options
    */
   parse(e, t, n, s) {
-    const i = new ze(), r = [];
+    const r = new Ge(), i = [];
     for (let o = 0, c = this.pluginCallbacks.length; o < c; o++)
-      r.push(this.pluginCallbacks[o](i));
-    i.setPlugins(r), i.setTextureUtils(this.textureUtils), i.writeAsync(e, t, s).catch(n);
+      i.push(this.pluginCallbacks[o](r));
+    r.setPlugins(i), r.setTextureUtils(this.textureUtils), r.writeAsync(e, t, s).catch(n);
   }
   parseAsync(e, t) {
     const n = this;
-    return new Promise(function(s, i) {
-      n.parse(e, s, i, t);
+    return new Promise(function(s, r) {
+      n.parse(e, s, r, t);
     });
   }
 }
@@ -116,50 +116,50 @@ const y = {
   CLAMP_TO_EDGE: 33071,
   MIRRORED_REPEAT: 33648,
   REPEAT: 10497
-}, k = "KHR_mesh_quantization", b = {};
-b[ye] = y.NEAREST;
-b[Te] = y.NEAREST_MIPMAP_NEAREST;
-b[we] = y.NEAREST_MIPMAP_LINEAR;
-b[me] = y.LINEAR;
-b[Me] = y.LINEAR_MIPMAP_NEAREST;
-b[Ae] = y.LINEAR_MIPMAP_LINEAR;
-b[Ee] = y.CLAMP_TO_EDGE;
-b[Ie] = y.REPEAT;
-b[Re] = y.MIRRORED_REPEAT;
-const q = {
+}, P = "KHR_mesh_quantization", b = {};
+b[me] = y.NEAREST;
+b[we] = y.NEAREST_MIPMAP_NEAREST;
+b[Me] = y.NEAREST_MIPMAP_LINEAR;
+b[Ae] = y.LINEAR;
+b[Ee] = y.LINEAR_MIPMAP_NEAREST;
+b[Ie] = y.LINEAR_MIPMAP_LINEAR;
+b[Re] = y.CLAMP_TO_EDGE;
+b[be] = y.REPEAT;
+b[Se] = y.MIRRORED_REPEAT;
+const X = {
   scale: "scale",
   position: "translation",
   quaternion: "rotation",
   morphTargetInfluences: "weights"
-}, Se = new ce(), X = 12, Le = 1179937895, _e = 2, J = 8, Ce = 1313821514, Ue = 5130562;
+}, _e = new ue(), J = 12, Ce = 1179937895, Ue = 2, Z = 8, Fe = 1313821514, ve = 5130562;
 function O(a, e) {
   return a.length === e.length && a.every(function(t, n) {
     return t === e[n];
   });
 }
-function Fe(a) {
+function Oe(a) {
   return new TextEncoder().encode(a).buffer;
 }
-function Oe(a) {
+function ze(a) {
   return O(a.elements, [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
 }
-function ve(a, e, t) {
+function Be(a, e, t) {
   const n = {
     min: new Array(a.itemSize).fill(Number.POSITIVE_INFINITY),
     max: new Array(a.itemSize).fill(Number.NEGATIVE_INFINITY)
   };
   for (let s = e; s < e + t; s++)
-    for (let i = 0; i < a.itemSize; i++) {
-      let r;
-      a.itemSize > 4 ? r = a.array[s * a.itemSize + i] : (i === 0 ? r = a.getX(s) : i === 1 ? r = a.getY(s) : i === 2 ? r = a.getZ(s) : i === 3 && (r = a.getW(s)), a.normalized === !0 && (r = V.normalize(r, a.array))), n.min[i] = Math.min(n.min[i], r), n.max[i] = Math.max(n.max[i], r);
+    for (let r = 0; r < a.itemSize; r++) {
+      let i;
+      a.itemSize > 4 ? i = a.array[s * a.itemSize + r] : (r === 0 ? i = a.getX(s) : r === 1 ? i = a.getY(s) : r === 2 ? i = a.getZ(s) : r === 3 && (i = a.getW(s)), a.normalized === !0 && (i = V.normalize(i, a.array))), n.min[r] = Math.min(n.min[r], i), n.max[r] = Math.max(n.max[r], i);
     }
   return n;
 }
-function ee(a) {
+function te(a) {
   return Math.ceil(a / 4) * 4;
 }
 function H(a, e = 0) {
-  const t = ee(a.byteLength);
+  const t = te(a.byteLength);
   if (t !== a.byteLength) {
     const n = new Uint8Array(t);
     if (n.set(new Uint8Array(a)), e !== 0)
@@ -169,7 +169,7 @@ function H(a, e = 0) {
   }
   return a;
 }
-function Z() {
+function $() {
   return typeof document > "u" && typeof OffscreenCanvas < "u" ? new OffscreenCanvas(1, 1) : document.createElement("canvas");
 }
 function Q(a, e) {
@@ -181,12 +181,12 @@ function Q(a, e) {
     quality: t
   });
 }
-class ze {
+class Ge {
   constructor() {
     this.plugins = [], this.options = {}, this.pending = [], this.buffers = [], this.byteOffset = 0, this.buffers = [], this.nodeMap = /* @__PURE__ */ new Map(), this.skins = [], this.extensionsUsed = {}, this.extensionsRequired = {}, this.uids = /* @__PURE__ */ new Map(), this.uid = 0, this.json = {
       asset: {
         version: "2.0",
-        generator: "THREE.GLTFExporter r" + ue
+        generator: "THREE.GLTFExporter r" + he
       }
     }, this.cache = {
       meshes: /* @__PURE__ */ new Map(),
@@ -220,39 +220,39 @@ class ze {
       animations: [],
       includeCustomExtensions: !1
     }, n), this.options.animations.length > 0 && (this.options.trs = !0), await this.processInputAsync(e), await Promise.all(this.pending);
-    const s = this, i = s.buffers, r = s.json;
+    const s = this, r = s.buffers, i = s.json;
     n = s.options;
-    const o = s.extensionsUsed, c = s.extensionsRequired, f = new Blob(i, { type: "application/octet-stream" }), x = Object.keys(o), u = Object.keys(c);
-    if (x.length > 0 && (r.extensionsUsed = x), u.length > 0 && (r.extensionsRequired = u), r.buffers && r.buffers.length > 0 && (r.buffers[0].byteLength = f.size), n.binary === !0) {
+    const o = s.extensionsUsed, c = s.extensionsRequired, u = new Blob(r, { type: "application/octet-stream" }), d = Object.keys(o), l = Object.keys(c);
+    if (d.length > 0 && (i.extensionsUsed = d), l.length > 0 && (i.extensionsRequired = l), i.buffers && i.buffers.length > 0 && (i.buffers[0].byteLength = u.size), n.binary === !0) {
       const T = new FileReader();
-      T.readAsArrayBuffer(f), T.onloadend = function() {
-        const l = H(T.result), p = new DataView(new ArrayBuffer(J));
-        p.setUint32(0, l.byteLength, !0), p.setUint32(4, Ue, !0);
-        const h = H(Fe(JSON.stringify(r)), 32), d = new DataView(new ArrayBuffer(J));
-        d.setUint32(0, h.byteLength, !0), d.setUint32(4, Ce, !0);
-        const w = new ArrayBuffer(X), E = new DataView(w);
-        E.setUint32(0, Le, !0), E.setUint32(4, _e, !0);
-        const v = X + d.byteLength + h.byteLength + p.byteLength + l.byteLength;
-        E.setUint32(8, v, !0);
-        const g = new Blob([
-          w,
-          d,
+      T.readAsArrayBuffer(u), T.onloadend = function() {
+        const f = H(T.result), x = new DataView(new ArrayBuffer(Z));
+        x.setUint32(0, f.byteLength, !0), x.setUint32(4, ve, !0);
+        const g = H(Oe(JSON.stringify(i)), 32), h = new DataView(new ArrayBuffer(Z));
+        h.setUint32(0, g.byteLength, !0), h.setUint32(4, Fe, !0);
+        const m = new ArrayBuffer(J), w = new DataView(m);
+        w.setUint32(0, Ce, !0), w.setUint32(4, Ue, !0);
+        const L = J + h.byteLength + g.byteLength + x.byteLength + f.byteLength;
+        w.setUint32(8, L, !0);
+        const p = new Blob([
+          m,
           h,
-          p,
-          l
-        ], { type: "application/octet-stream" }), m = new FileReader();
-        m.readAsArrayBuffer(g), m.onloadend = function() {
-          t(m.result);
+          g,
+          x,
+          f
+        ], { type: "application/octet-stream" }), M = new FileReader();
+        M.readAsArrayBuffer(p), M.onloadend = function() {
+          t(M.result);
         };
       };
-    } else if (r.buffers && r.buffers.length > 0) {
+    } else if (i.buffers && i.buffers.length > 0) {
       const T = new FileReader();
-      T.readAsDataURL(f), T.onloadend = function() {
-        const l = T.result;
-        r.buffers[0].uri = l, t(r);
+      T.readAsDataURL(u), T.onloadend = function() {
+        const f = T.result;
+        i.buffers[0].uri = f, t(i);
       };
     } else
-      t(r);
+      t(i);
   }
   /**
    * Serializes a userData.
@@ -264,16 +264,16 @@ class ze {
     if (Object.keys(e.userData).length === 0) return;
     const n = this.options, s = this.extensionsUsed;
     try {
-      const i = JSON.parse(JSON.stringify(e.userData));
-      if (n.includeCustomExtensions && i.gltfExtensions) {
+      const r = JSON.parse(JSON.stringify(e.userData));
+      if (n.includeCustomExtensions && r.gltfExtensions) {
         t.extensions === void 0 && (t.extensions = {});
-        for (const r in i.gltfExtensions)
-          t.extensions[r] = i.gltfExtensions[r], s[r] = !0;
-        delete i.gltfExtensions;
+        for (const i in r.gltfExtensions)
+          t.extensions[i] = r.gltfExtensions[i], s[i] = !0;
+        delete r.gltfExtensions;
       }
-      Object.keys(i).length > 0 && (t.extras = i);
-    } catch (i) {
-      console.warn("THREE.GLTFExporter: userData of '" + e.name + "' won't be serialized because of JSON.stringify error - " + i.message);
+      Object.keys(r).length > 0 && (t.extras = r);
+    } catch (r) {
+      console.warn("THREE.GLTFExporter: userData of '" + e.name + "' won't be serialized because of JSON.stringify error - " + r.message);
     }
   }
   /**
@@ -299,7 +299,7 @@ class ze {
   isNormalizedNormalAttribute(e) {
     if (this.cache.attributesNormalized.has(e)) return !1;
     const n = new z();
-    for (let s = 0, i = e.count; s < i; s++)
+    for (let s = 0, r = e.count; s < r; s++)
       if (Math.abs(n.fromBufferAttribute(e, s).length() - 1) > 5e-4) return !1;
     return !0;
   }
@@ -314,8 +314,8 @@ class ze {
     const t = this.cache;
     if (t.attributesNormalized.has(e)) return t.attributesNormalized.get(e);
     const n = e.clone(), s = new z();
-    for (let i = 0, r = n.count; i < r; i++)
-      s.fromBufferAttribute(n, i), s.x === 0 && s.y === 0 && s.z === 0 ? s.setX(1) : s.normalize(), n.setXYZ(i, s.x, s.y, s.z);
+    for (let r = 0, i = n.count; r < i; r++)
+      s.fromBufferAttribute(n, r), s.x === 0 && s.y === 0 && s.z === 0 ? s.setX(1) : s.normalize(), n.setXYZ(r, s.x, s.y, s.z);
     return t.attributesNormalized.set(e, n), n;
   }
   /**
@@ -332,36 +332,36 @@ class ze {
   }
   async buildMetalRoughTextureAsync(e, t) {
     if (e === t) return e;
-    function n(l) {
-      return l.colorSpace === ge ? function(h) {
-        return h < 0.04045 ? h * 0.0773993808 : Math.pow(h * 0.9478672986 + 0.0521327014, 2.4);
-      } : function(h) {
-        return h;
+    function n(f) {
+      return f.colorSpace === Te ? function(g) {
+        return g < 0.04045 ? g * 0.0773993808 : Math.pow(g * 0.9478672986 + 0.0521327014, 2.4);
+      } : function(g) {
+        return g;
       };
     }
-    e instanceof P && (e = await this.decompressTextureAsync(e)), t instanceof P && (t = await this.decompressTextureAsync(t));
-    const s = e ? e.image : null, i = t ? t.image : null, r = Math.max(s ? s.width : 0, i ? i.width : 0), o = Math.max(s ? s.height : 0, i ? i.height : 0), c = Z();
-    c.width = r, c.height = o;
-    const f = c.getContext("2d", {
+    e instanceof k && (e = await this.decompressTextureAsync(e)), t instanceof k && (t = await this.decompressTextureAsync(t));
+    const s = e ? e.image : null, r = t ? t.image : null, i = Math.max(s ? s.width : 0, r ? r.width : 0), o = Math.max(s ? s.height : 0, r ? r.height : 0), c = $();
+    c.width = i, c.height = o;
+    const u = c.getContext("2d", {
       willReadFrequently: !0
     });
-    f.fillStyle = "#00ffff", f.fillRect(0, 0, r, o);
-    const x = f.getImageData(0, 0, r, o);
+    u.fillStyle = "#00ffff", u.fillRect(0, 0, i, o);
+    const d = u.getImageData(0, 0, i, o);
     if (s) {
-      f.drawImage(s, 0, 0, r, o);
-      const l = n(e), p = f.getImageData(0, 0, r, o).data;
-      for (let h = 2; h < p.length; h += 4)
-        x.data[h] = l(p[h] / 256) * 256;
+      u.drawImage(s, 0, 0, i, o);
+      const f = n(e), x = u.getImageData(0, 0, i, o).data;
+      for (let g = 2; g < x.length; g += 4)
+        d.data[g] = f(x[g] / 256) * 256;
     }
-    if (i) {
-      f.drawImage(i, 0, 0, r, o);
-      const l = n(t), p = f.getImageData(0, 0, r, o).data;
-      for (let h = 1; h < p.length; h += 4)
-        x.data[h] = l(p[h] / 256) * 256;
+    if (r) {
+      u.drawImage(r, 0, 0, i, o);
+      const f = n(t), x = u.getImageData(0, 0, i, o).data;
+      for (let g = 1; g < x.length; g += 4)
+        d.data[g] = f(x[g] / 256) * 256;
     }
-    f.putImageData(x, 0, 0);
+    u.putImageData(d, 0, 0);
     const T = (e || t).clone();
-    return T.source = new fe(c), T.colorSpace = he, T.channel = (e || t).channel, e && t && e.channel !== t.channel && console.warn("THREE.GLTFExporter: UV channels for metalnessMap and roughnessMap textures must match."), console.warn("THREE.GLTFExporter: Merged metalnessMap and roughnessMap textures."), T;
+    return T.source = new pe(c), T.colorSpace = de, T.channel = (e || t).channel, e && t && e.channel !== t.channel && console.warn("THREE.GLTFExporter: UV channels for metalnessMap and roughnessMap textures must match."), console.warn("THREE.GLTFExporter: Merged metalnessMap and roughnessMap textures."), T;
   }
   async decompressTextureAsync(e, t = 1 / 0) {
     if (this.textureUtils === null)
@@ -386,9 +386,9 @@ class ze {
    * @param {?number} target Target usage of the BufferView
    * @return {Object}
    */
-  processBufferView(e, t, n, s, i) {
-    const r = this.json;
-    r.bufferViews || (r.bufferViews = []);
+  processBufferView(e, t, n, s, r) {
+    const i = this.json;
+    i.bufferViews || (i.bufferViews = []);
     let o;
     switch (t) {
       case y.BYTE:
@@ -403,23 +403,23 @@ class ze {
         o = 4;
     }
     let c = e.itemSize * o;
-    i === y.ARRAY_BUFFER && (c = Math.ceil(c / 4) * 4);
-    const f = ee(s * c), x = new DataView(new ArrayBuffer(f));
-    let u = 0;
-    for (let p = n; p < n + s; p++) {
-      for (let h = 0; h < e.itemSize; h++) {
-        let d;
-        e.itemSize > 4 ? d = e.array[p * e.itemSize + h] : (h === 0 ? d = e.getX(p) : h === 1 ? d = e.getY(p) : h === 2 ? d = e.getZ(p) : h === 3 && (d = e.getW(p)), e.normalized === !0 && (d = V.normalize(d, e.array))), t === y.FLOAT ? x.setFloat32(u, d, !0) : t === y.INT ? x.setInt32(u, d, !0) : t === y.UNSIGNED_INT ? x.setUint32(u, d, !0) : t === y.SHORT ? x.setInt16(u, d, !0) : t === y.UNSIGNED_SHORT ? x.setUint16(u, d, !0) : t === y.BYTE ? x.setInt8(u, d) : t === y.UNSIGNED_BYTE && x.setUint8(u, d), u += o;
+    r === y.ARRAY_BUFFER && (c = Math.ceil(c / 4) * 4);
+    const u = te(s * c), d = new DataView(new ArrayBuffer(u));
+    let l = 0;
+    for (let x = n; x < n + s; x++) {
+      for (let g = 0; g < e.itemSize; g++) {
+        let h;
+        e.itemSize > 4 ? h = e.array[x * e.itemSize + g] : (g === 0 ? h = e.getX(x) : g === 1 ? h = e.getY(x) : g === 2 ? h = e.getZ(x) : g === 3 && (h = e.getW(x)), e.normalized === !0 && (h = V.normalize(h, e.array))), t === y.FLOAT ? d.setFloat32(l, h, !0) : t === y.INT ? d.setInt32(l, h, !0) : t === y.UNSIGNED_INT ? d.setUint32(l, h, !0) : t === y.SHORT ? d.setInt16(l, h, !0) : t === y.UNSIGNED_SHORT ? d.setUint16(l, h, !0) : t === y.BYTE ? d.setInt8(l, h) : t === y.UNSIGNED_BYTE && d.setUint8(l, h), l += o;
       }
-      u % c !== 0 && (u += c - u % c);
+      l % c !== 0 && (l += c - l % c);
     }
     const T = {
-      buffer: this.processBuffer(x.buffer),
+      buffer: this.processBuffer(d.buffer),
       byteOffset: this.byteOffset,
-      byteLength: f
+      byteLength: u
     };
-    return i !== void 0 && (T.target = i), i === y.ARRAY_BUFFER && (T.byteStride = c), this.byteOffset += f, r.bufferViews.push(T), {
-      id: r.bufferViews.length - 1,
+    return r !== void 0 && (T.target = r), r === y.ARRAY_BUFFER && (T.byteStride = c), this.byteOffset += u, i.bufferViews.push(T), {
+      id: i.bufferViews.length - 1,
       byteLength: 0
     };
   }
@@ -431,14 +431,14 @@ class ze {
   processBufferViewImage(e) {
     const t = this, n = t.json;
     return n.bufferViews || (n.bufferViews = []), new Promise(function(s) {
-      const i = new FileReader();
-      i.readAsArrayBuffer(e), i.onloadend = function() {
-        const r = H(i.result), o = {
-          buffer: t.processBuffer(r),
+      const r = new FileReader();
+      r.readAsArrayBuffer(e), r.onloadend = function() {
+        const i = H(r.result), o = {
+          buffer: t.processBuffer(i),
           byteOffset: t.byteOffset,
-          byteLength: r.byteLength
+          byteLength: i.byteLength
         };
-        t.byteOffset += r.byteLength, s(n.bufferViews.push(o) - 1);
+        t.byteOffset += i.byteLength, s(n.bufferViews.push(o) - 1);
       };
     });
   }
@@ -451,7 +451,7 @@ class ze {
    * @return {?number} Index of the processed accessor on the "accessors" array
    */
   processAccessor(e, t, n, s) {
-    const i = this.json, r = {
+    const r = this.json, i = {
       1: "SCALAR",
       2: "VEC2",
       3: "VEC3",
@@ -477,19 +477,19 @@ class ze {
     else
       throw new Error("THREE.GLTFExporter: Unsupported bufferAttribute component type: " + e.array.constructor.name);
     if (n === void 0 && (n = 0), (s === void 0 || s === 1 / 0) && (s = e.count), s === 0) return null;
-    const c = ve(e, n, s);
-    let f;
-    t !== void 0 && (f = e === t.index ? y.ELEMENT_ARRAY_BUFFER : y.ARRAY_BUFFER);
-    const x = this.processBufferView(e, o, n, s, f), u = {
-      bufferView: x.id,
-      byteOffset: x.byteOffset,
+    const c = Be(e, n, s);
+    let u;
+    t !== void 0 && (u = e === t.index ? y.ELEMENT_ARRAY_BUFFER : y.ARRAY_BUFFER);
+    const d = this.processBufferView(e, o, n, s, u), l = {
+      bufferView: d.id,
+      byteOffset: d.byteOffset,
       componentType: o,
       count: s,
       max: c.max,
       min: c.min,
-      type: r[e.itemSize]
+      type: i[e.itemSize]
     };
-    return e.normalized === !0 && (u.normalized = !0), i.accessors || (i.accessors = []), i.accessors.push(u) - 1;
+    return e.normalized === !0 && (l.normalized = !0), r.accessors || (r.accessors = []), r.accessors.push(l) - 1;
   }
   /**
    * Process image
@@ -501,37 +501,37 @@ class ze {
    */
   processImage(e, t, n, s = "image/png") {
     if (e !== null) {
-      const i = this, r = i.cache, o = i.json, c = i.options, f = i.pending;
-      r.images.has(e) || r.images.set(e, {});
-      const x = r.images.get(e), u = s + ":flipY/" + n.toString();
-      if (x[u] !== void 0) return x[u];
+      const r = this, i = r.cache, o = r.json, c = r.options, u = r.pending;
+      i.images.has(e) || i.images.set(e, {});
+      const d = i.images.get(e), l = s + ":flipY/" + n.toString();
+      if (d[l] !== void 0) return d[l];
       o.images || (o.images = []);
-      const T = { mimeType: s }, l = Z();
-      l.width = Math.min(e.width, c.maxTextureSize), l.height = Math.min(e.height, c.maxTextureSize);
-      const p = l.getContext("2d", {
+      const T = { mimeType: s }, f = $();
+      f.width = Math.min(e.width, c.maxTextureSize), f.height = Math.min(e.height, c.maxTextureSize);
+      const x = f.getContext("2d", {
         willReadFrequently: !0
       });
-      if (n === !0 && (p.translate(0, l.height), p.scale(1, -1)), e.data !== void 0) {
-        t !== pe && console.error("GLTFExporter: Only RGBAFormat is supported.", t), (e.width > c.maxTextureSize || e.height > c.maxTextureSize) && console.warn("GLTFExporter: Image size is bigger than maxTextureSize", e);
-        const d = new Uint8ClampedArray(e.height * e.width * 4);
-        for (let w = 0; w < d.length; w += 4)
-          d[w + 0] = e.data[w + 0], d[w + 1] = e.data[w + 1], d[w + 2] = e.data[w + 2], d[w + 3] = e.data[w + 3];
-        p.putImageData(new ImageData(d, e.width, e.height), 0, 0);
+      if (n === !0 && (x.translate(0, f.height), x.scale(1, -1)), e.data !== void 0) {
+        t !== xe && console.error("GLTFExporter: Only RGBAFormat is supported.", t), (e.width > c.maxTextureSize || e.height > c.maxTextureSize) && console.warn("GLTFExporter: Image size is bigger than maxTextureSize", e);
+        const h = new Uint8ClampedArray(e.height * e.width * 4);
+        for (let m = 0; m < h.length; m += 4)
+          h[m + 0] = e.data[m + 0], h[m + 1] = e.data[m + 1], h[m + 2] = e.data[m + 2], h[m + 3] = e.data[m + 3];
+        x.putImageData(new ImageData(h, e.width, e.height), 0, 0);
       } else if (typeof HTMLImageElement < "u" && e instanceof HTMLImageElement || typeof HTMLCanvasElement < "u" && e instanceof HTMLCanvasElement || typeof ImageBitmap < "u" && e instanceof ImageBitmap || typeof OffscreenCanvas < "u" && e instanceof OffscreenCanvas)
-        p.drawImage(e, 0, 0, l.width, l.height);
+        x.drawImage(e, 0, 0, f.width, f.height);
       else
         throw new Error("THREE.GLTFExporter: Invalid image type. Use HTMLImageElement, HTMLCanvasElement, ImageBitmap or OffscreenCanvas.");
-      c.binary === !0 ? f.push(
-        Q(l, s).then((d) => i.processBufferViewImage(d)).then((d) => {
-          T.bufferView = d;
+      c.binary === !0 ? u.push(
+        Q(f, s).then((h) => r.processBufferViewImage(h)).then((h) => {
+          T.bufferView = h;
         })
-      ) : l.toDataURL !== void 0 ? T.uri = l.toDataURL(s) : f.push(
-        Q(l, s).then((d) => new FileReader().readAsDataURL(d)).then((d) => {
-          T.uri = d;
+      ) : f.toDataURL !== void 0 ? T.uri = f.toDataURL(s) : u.push(
+        Q(f, s).then((h) => new FileReader().readAsDataURL(h)).then((h) => {
+          T.uri = h;
         })
       );
-      const h = o.images.push(T) - 1;
-      return x[u] = h, h;
+      const g = o.images.push(T) - 1;
+      return d[l] = g, g;
     } else
       throw new Error("THREE.GLTFExporter: No valid image data found. Unable to process texture.");
   }
@@ -557,19 +557,19 @@ class ze {
    * @return {Promise<number>} Index of the processed texture in the "textures" array
    */
   async processTextureAsync(e) {
-    const n = this.options, s = this.cache, i = this.json;
+    const n = this.options, s = this.cache, r = this.json;
     if (s.textures.has(e)) return s.textures.get(e);
-    i.textures || (i.textures = []), e instanceof P && (e = await this.decompressTextureAsync(e, n.maxTextureSize));
-    let r = e.userData.mimeType;
-    r === "image/webp" && (r = "image/png");
+    r.textures || (r.textures = []), e instanceof k && (e = await this.decompressTextureAsync(e, n.maxTextureSize));
+    let i = e.userData.mimeType;
+    i === "image/webp" && (i = "image/png");
     const o = {
       sampler: this.processSampler(e),
-      source: this.processImage(e.image, e.format, e.flipY, r)
+      source: this.processImage(e.image, e.format, e.flipY, i)
     };
-    e.name && (o.name = e.name), await this._invokeAllAsync(async function(f) {
-      f.writeTexture && await f.writeTexture(e, o);
+    e.name && (o.name = e.name), await this._invokeAllAsync(async function(u) {
+      u.writeTexture && await u.writeTexture(e, o);
     });
-    const c = i.textures.push(o) - 1;
+    const c = r.textures.push(o) - 1;
     return s.textures.set(e, c), c;
   }
   /**
@@ -585,8 +585,8 @@ class ze {
     n.materials || (n.materials = []);
     const s = { pbrMetallicRoughness: {} };
     e.isMeshStandardMaterial !== !0 && e.isMeshBasicMaterial !== !0 && console.warn("GLTFExporter: Use MeshStandardMaterial or MeshBasicMaterial for best results.");
-    const i = e.color.toArray().concat([e.opacity]);
-    if (O(i, [1, 1, 1, 1]) || (s.pbrMetallicRoughness.baseColorFactor = i), e.isMeshStandardMaterial ? (s.pbrMetallicRoughness.metallicFactor = e.metalness, s.pbrMetallicRoughness.roughnessFactor = e.roughness) : (s.pbrMetallicRoughness.metallicFactor = 0, s.pbrMetallicRoughness.roughnessFactor = 1), e.metalnessMap || e.roughnessMap) {
+    const r = e.color.toArray().concat([e.opacity]);
+    if (O(r, [1, 1, 1, 1]) || (s.pbrMetallicRoughness.baseColorFactor = r), e.isMeshStandardMaterial ? (s.pbrMetallicRoughness.metallicFactor = e.metalness, s.pbrMetallicRoughness.roughnessFactor = e.roughness) : (s.pbrMetallicRoughness.metallicFactor = 0, s.pbrMetallicRoughness.roughnessFactor = 1), e.metalnessMap || e.roughnessMap) {
       const o = await this.buildMetalRoughTextureAsync(e.metalnessMap, e.roughnessMap), c = {
         index: await this.processTextureAsync(o),
         texCoord: o.channel
@@ -603,11 +603,11 @@ class ze {
     if (e.emissive) {
       const o = e.emissive;
       if (Math.max(o.r, o.g, o.b) > 0 && (s.emissiveFactor = e.emissive.toArray()), e.emissiveMap) {
-        const f = {
+        const u = {
           index: await this.processTextureAsync(e.emissiveMap),
           texCoord: e.emissiveMap.channel
         };
-        this.applyTextureTransform(f, e.emissiveMap), s.emissiveTexture = f;
+        this.applyTextureTransform(u, e.emissiveMap), s.emissiveTexture = u;
       }
     }
     if (e.normalMap) {
@@ -624,11 +624,11 @@ class ze {
       };
       e.aoMapIntensity !== 1 && (o.strength = e.aoMapIntensity), this.applyTextureTransform(o, e.aoMap), s.occlusionTexture = o;
     }
-    e.transparent ? s.alphaMode = "BLEND" : e.alphaTest > 0 && (s.alphaMode = "MASK", s.alphaCutoff = e.alphaTest), e.side === de && (s.doubleSided = !0), e.name !== "" && (s.name = e.name), this.serializeUserData(e, s), await this._invokeAllAsync(async function(o) {
+    e.transparent ? s.alphaMode = "BLEND" : e.alphaTest > 0 && (s.alphaMode = "MASK", s.alphaCutoff = e.alphaTest), e.side === ge && (s.doubleSided = !0), e.name !== "" && (s.name = e.name), this.serializeUserData(e, s), await this._invokeAllAsync(async function(o) {
       o.writeMaterialAsync && await o.writeMaterialAsync(e, s);
     });
-    const r = n.materials.push(s) - 1;
-    return t.materials.set(e, r), r;
+    const i = n.materials.push(s) - 1;
+    return t.materials.set(e, i), i;
   }
   /**
    * Process mesh
@@ -638,16 +638,16 @@ class ze {
   async processMeshAsync(e) {
     const t = this.cache, n = this.json, s = [e.geometry.uuid];
     if (Array.isArray(e.material))
-      for (let g = 0, m = e.material.length; g < m; g++)
-        s.push(e.material[g].uuid);
+      for (let p = 0, M = e.material.length; p < M; p++)
+        s.push(e.material[p].uuid);
     else
       s.push(e.material.uuid);
-    const i = s.join(":");
-    if (t.meshes.has(i)) return t.meshes.get(i);
-    const r = e.geometry;
+    const r = s.join(":");
+    if (t.meshes.has(r)) return t.meshes.get(r);
+    const i = e.geometry;
     let o;
     e.isLineSegments ? o = y.LINES : e.isLineLoop ? o = y.LINE_LOOP : e.isLine ? o = y.LINE_STRIP : e.isPoints ? o = y.POINTS : o = e.material.wireframe ? y.LINES : y.TRIANGLES;
-    const c = {}, f = {}, x = [], u = [], T = {
+    const c = {}, u = {}, d = [], l = [], T = {
       uv: "TEXCOORD_0",
       uv1: "TEXCOORD_1",
       uv2: "TEXCOORD_2",
@@ -655,79 +655,79 @@ class ze {
       color: "COLOR_0",
       skinWeight: "WEIGHTS_0",
       skinIndex: "JOINTS_0"
-    }, l = r.getAttribute("normal");
-    l !== void 0 && !this.isNormalizedNormalAttribute(l) && (console.warn("THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one."), r.setAttribute("normal", this.createNormalizedNormalAttribute(l)));
-    let p = null;
-    for (let g in r.attributes) {
-      if (g.slice(0, 5) === "morph") continue;
-      const m = r.attributes[g];
-      if (g = T[g] || g.toUpperCase(), /^(POSITION|NORMAL|TANGENT|TEXCOORD_\d+|COLOR_\d+|JOINTS_\d+|WEIGHTS_\d+)$/.test(g) || (g = "_" + g), t.attributes.has(this.getUID(m))) {
-        f[g] = t.attributes.get(this.getUID(m));
+    }, f = i.getAttribute("normal");
+    f !== void 0 && !this.isNormalizedNormalAttribute(f) && (console.warn("THREE.GLTFExporter: Creating normalized normal attribute from the non-normalized one."), i.setAttribute("normal", this.createNormalizedNormalAttribute(f)));
+    let x = null;
+    for (let p in i.attributes) {
+      if (p.slice(0, 5) === "morph") continue;
+      const M = i.attributes[p];
+      if (p = T[p] || p.toUpperCase(), /^(POSITION|NORMAL|TANGENT|TEXCOORD_\d+|COLOR_\d+|JOINTS_\d+|WEIGHTS_\d+)$/.test(p) || (p = "_" + p), t.attributes.has(this.getUID(M))) {
+        u[p] = t.attributes.get(this.getUID(M));
         continue;
       }
-      p = null;
-      const M = m.array;
-      g === "JOINTS_0" && !(M instanceof Uint16Array) && !(M instanceof Uint8Array) ? (console.warn('GLTFExporter: Attribute "skinIndex" converted to type UNSIGNED_SHORT.'), p = new L(new Uint16Array(M), m.itemSize, m.normalized)) : (M instanceof Uint32Array || M instanceof Int32Array) && !g.startsWith("_") && (console.warn(`GLTFExporter: Attribute "${g}" converted to type FLOAT.`), p = G.Utils.toFloat32BufferAttribute(m));
-      const R = this.processAccessor(p || m, r);
-      R !== null && (g.startsWith("_") || this.detectMeshQuantization(g, m), f[g] = R, t.attributes.set(this.getUID(m), R));
+      x = null;
+      const A = M.array;
+      p === "JOINTS_0" && !(A instanceof Uint16Array) && !(A instanceof Uint8Array) ? (console.warn('GLTFExporter: Attribute "skinIndex" converted to type UNSIGNED_SHORT.'), x = new _(new Uint16Array(A), M.itemSize, M.normalized)) : (A instanceof Uint32Array || A instanceof Int32Array) && !p.startsWith("_") && (console.warn(`GLTFExporter: Attribute "${p}" converted to type FLOAT.`), x = G.Utils.toFloat32BufferAttribute(M));
+      const R = this.processAccessor(x || M, i);
+      R !== null && (p.startsWith("_") || this.detectMeshQuantization(p, M), u[p] = R, t.attributes.set(this.getUID(M), R));
     }
-    if (l !== void 0 && r.setAttribute("normal", l), Object.keys(f).length === 0) return null;
+    if (f !== void 0 && i.setAttribute("normal", f), Object.keys(u).length === 0) return null;
     if (e.morphTargetInfluences !== void 0 && e.morphTargetInfluences.length > 0) {
-      const g = [], m = [], A = {};
+      const p = [], M = [], E = {};
       if (e.morphTargetDictionary !== void 0)
-        for (const M in e.morphTargetDictionary)
-          A[e.morphTargetDictionary[M]] = M;
-      for (let M = 0; M < e.morphTargetInfluences.length; ++M) {
+        for (const A in e.morphTargetDictionary)
+          E[e.morphTargetDictionary[A]] = A;
+      for (let A = 0; A < e.morphTargetInfluences.length; ++A) {
         const R = {};
         let j = !1;
-        for (const C in r.morphAttributes) {
-          if (C !== "position" && C !== "normal") {
+        for (const U in i.morphAttributes) {
+          if (U !== "position" && U !== "normal") {
             j || (console.warn("GLTFExporter: Only POSITION and NORMAL morph are supported."), j = !0);
             continue;
           }
-          const N = r.morphAttributes[C][M], D = C.toUpperCase(), U = r.attributes[C];
-          if (t.attributes.has(this.getUID(N, !0))) {
-            R[D] = t.attributes.get(this.getUID(N, !0));
+          const S = i.morphAttributes[U][A], D = U.toUpperCase(), F = i.attributes[U];
+          if (t.attributes.has(this.getUID(S, !0))) {
+            R[D] = t.attributes.get(this.getUID(S, !0));
             continue;
           }
-          const F = N.clone();
-          if (!r.morphTargetsRelative)
-            for (let I = 0, te = N.count; I < te; I++)
-              for (let _ = 0; _ < N.itemSize; _++)
-                _ === 0 && F.setX(I, N.getX(I) - U.getX(I)), _ === 1 && F.setY(I, N.getY(I) - U.getY(I)), _ === 2 && F.setZ(I, N.getZ(I) - U.getZ(I)), _ === 3 && F.setW(I, N.getW(I) - U.getW(I));
-          R[D] = this.processAccessor(F, r), t.attributes.set(this.getUID(U, !0), R[D]);
+          const v = S.clone();
+          if (!i.morphTargetsRelative)
+            for (let I = 0, se = S.count; I < se; I++)
+              for (let C = 0; C < S.itemSize; C++)
+                C === 0 && v.setX(I, S.getX(I) - F.getX(I)), C === 1 && v.setY(I, S.getY(I) - F.getY(I)), C === 2 && v.setZ(I, S.getZ(I) - F.getZ(I)), C === 3 && v.setW(I, S.getW(I) - F.getW(I));
+          R[D] = this.processAccessor(v, i), t.attributes.set(this.getUID(F, !0), R[D]);
         }
-        u.push(R), g.push(e.morphTargetInfluences[M]), e.morphTargetDictionary !== void 0 && m.push(A[M]);
+        l.push(R), p.push(e.morphTargetInfluences[A]), e.morphTargetDictionary !== void 0 && M.push(E[A]);
       }
-      c.weights = g, m.length > 0 && (c.extras = {}, c.extras.targetNames = m);
+      c.weights = p, M.length > 0 && (c.extras = {}, c.extras.targetNames = M);
     }
-    const h = Array.isArray(e.material);
-    if (h && r.groups.length === 0) return null;
-    let d = !1;
-    if (h && r.index === null) {
-      const g = [];
-      for (let m = 0, A = r.attributes.position.count; m < A; m++)
-        g[m] = m;
-      r.setIndex(g), d = !0;
+    const g = Array.isArray(e.material);
+    if (g && i.groups.length === 0) return null;
+    let h = !1;
+    if (g && i.index === null) {
+      const p = [];
+      for (let M = 0, E = i.attributes.position.count; M < E; M++)
+        p[M] = M;
+      i.setIndex(p), h = !0;
     }
-    const w = h ? e.material : [e.material], E = h ? r.groups : [{ materialIndex: 0, start: void 0, count: void 0 }];
-    for (let g = 0, m = E.length; g < m; g++) {
-      const A = {
+    const m = g ? e.material : [e.material], w = g ? i.groups : [{ materialIndex: 0, start: void 0, count: void 0 }];
+    for (let p = 0, M = w.length; p < M; p++) {
+      const E = {
         mode: o,
-        attributes: f
+        attributes: u
       };
-      if (this.serializeUserData(r, A), u.length > 0 && (A.targets = u), r.index !== null) {
-        let R = this.getUID(r.index);
-        (E[g].start !== void 0 || E[g].count !== void 0) && (R += ":" + E[g].start + ":" + E[g].count), t.attributes.has(R) ? A.indices = t.attributes.get(R) : (A.indices = this.processAccessor(r.index, r, E[g].start, E[g].count), t.attributes.set(R, A.indices)), A.indices === null && delete A.indices;
+      if (this.serializeUserData(i, E), l.length > 0 && (E.targets = l), i.index !== null) {
+        let R = this.getUID(i.index);
+        (w[p].start !== void 0 || w[p].count !== void 0) && (R += ":" + w[p].start + ":" + w[p].count), t.attributes.has(R) ? E.indices = t.attributes.get(R) : (E.indices = this.processAccessor(i.index, i, w[p].start, w[p].count), t.attributes.set(R, E.indices)), E.indices === null && delete E.indices;
       }
-      const M = await this.processMaterialAsync(w[E[g].materialIndex]);
-      M !== null && (A.material = M), x.push(A);
+      const A = await this.processMaterialAsync(m[w[p].materialIndex]);
+      A !== null && (E.material = A), d.push(E);
     }
-    d === !0 && r.setIndex(null), c.primitives = x, n.meshes || (n.meshes = []), await this._invokeAllAsync(function(g) {
-      g.writeMesh && g.writeMesh(e, c);
+    h === !0 && i.setIndex(null), c.primitives = d, n.meshes || (n.meshes = []), await this._invokeAllAsync(function(p) {
+      p.writeMesh && p.writeMesh(e, c);
     });
-    const v = n.meshes.push(c) - 1;
-    return t.meshes.set(i, v), v;
+    const L = n.meshes.push(c) - 1;
+    return t.meshes.set(r, L), L;
   }
   /**
    * If a vertex attribute with a
@@ -741,7 +741,7 @@ class ze {
    * @param {THREE.BufferAttribute} attribute
    */
   detectMeshQuantization(e, t) {
-    if (this.extensionsUsed[k]) return;
+    if (this.extensionsUsed[P]) return;
     let n;
     switch (t.array.constructor) {
       case Int8Array:
@@ -761,7 +761,7 @@ class ze {
     }
     t.normalized && (n += " normalized");
     const s = e.split("_", 1)[0];
-    W[s] && W[s].includes(n) && (this.extensionsUsed[k] = !0, this.extensionsRequired[k] = !0);
+    q[s] && q[s].includes(n) && (this.extensionsUsed[P] = !0, this.extensionsRequired[P] = !0);
   }
   /**
    * Process camera
@@ -799,27 +799,27 @@ class ze {
   processAnimation(e, t) {
     const n = this.json, s = this.nodeMap;
     n.animations || (n.animations = []), e = G.Utils.mergeMorphTargetTracks(e.clone(), t);
-    const i = e.tracks, r = [], o = [];
-    for (let c = 0; c < i.length; ++c) {
-      const f = i[c], x = B.parseTrackName(f.name);
-      let u = B.findNode(t, x.nodeName);
-      const T = q[x.propertyName];
-      if (x.objectName === "bones" && (u.isSkinnedMesh === !0 ? u = u.skeleton.getBoneByName(x.objectIndex) : u = void 0), !u || !T) {
-        console.warn('THREE.GLTFExporter: Could not export animation track "%s".', f.name);
+    const r = e.tracks, i = [], o = [];
+    for (let c = 0; c < r.length; ++c) {
+      const u = r[c], d = B.parseTrackName(u.name);
+      let l = B.findNode(t, d.nodeName);
+      const T = X[d.propertyName];
+      if (d.objectName === "bones" && (l.isSkinnedMesh === !0 ? l = l.skeleton.getBoneByName(d.objectIndex) : l = void 0), !l || !T) {
+        console.warn('THREE.GLTFExporter: Could not export animation track "%s".', u.name);
         continue;
       }
-      const l = 1;
-      let p = f.values.length / f.times.length;
-      T === q.morphTargetInfluences && (p /= u.morphTargetInfluences.length);
-      let h;
-      f.createInterpolant.isInterpolantFactoryMethodGLTFCubicSpline === !0 ? (h = "CUBICSPLINE", p /= 3) : f.getInterpolation() === xe ? h = "STEP" : h = "LINEAR", o.push({
-        input: this.processAccessor(new L(f.times, l)),
-        output: this.processAccessor(new L(f.values, p)),
-        interpolation: h
-      }), r.push({
+      const f = 1;
+      let x = u.values.length / u.times.length;
+      T === X.morphTargetInfluences && (x /= l.morphTargetInfluences.length);
+      let g;
+      u.createInterpolant.isInterpolantFactoryMethodGLTFCubicSpline === !0 ? (g = "CUBICSPLINE", x /= 3) : u.getInterpolation() === ye ? g = "STEP" : g = "LINEAR", o.push({
+        input: this.processAccessor(new _(u.times, f)),
+        output: this.processAccessor(new _(u.values, x)),
+        interpolation: g
+      }), i.push({
         sampler: o.length - 1,
         target: {
-          node: s.get(u),
+          node: s.get(l),
           path: T
         }
       });
@@ -827,7 +827,7 @@ class ze {
     return n.animations.push({
       name: e.name || "clip_" + n.animations.length,
       samplers: o,
-      channels: r
+      channels: i
     }), n.animations.length - 1;
   }
   /**
@@ -835,17 +835,17 @@ class ze {
    * @return {number|null}
    */
   processSkin(e) {
-    const t = this.json, n = this.nodeMap, s = t.nodes[n.get(e)], i = e.skeleton;
-    if (i === void 0) return null;
-    const r = e.skeleton.bones[0];
+    const t = this.json, n = this.nodeMap, s = t.nodes[n.get(e)], r = e.skeleton;
     if (r === void 0) return null;
-    const o = [], c = new Float32Array(i.bones.length * 16), f = new $();
-    for (let u = 0; u < i.bones.length; ++u)
-      o.push(n.get(i.bones[u])), f.copy(i.boneInverses[u]), f.multiply(e.bindMatrix).toArray(c, u * 16);
+    const i = e.skeleton.bones[0];
+    if (i === void 0) return null;
+    const o = [], c = new Float32Array(r.bones.length * 16), u = new ee();
+    for (let l = 0; l < r.bones.length; ++l)
+      o.push(n.get(r.bones[l])), u.copy(r.boneInverses[l]), u.multiply(e.bindMatrix).toArray(c, l * 16);
     return t.skins === void 0 && (t.skins = []), t.skins.push({
-      inverseBindMatrices: this.processAccessor(new L(c, 16)),
+      inverseBindMatrices: this.processAccessor(new _(c, 16)),
       joints: o,
-      skeleton: n.get(r)
+      skeleton: n.get(i)
     }), s.skin = t.skins.length - 1;
   }
   /**
@@ -856,32 +856,32 @@ class ze {
   async processNodeAsync(e) {
     const t = this.json, n = this.options, s = this.nodeMap;
     t.nodes || (t.nodes = []);
-    const i = {};
+    const r = {};
     if (n.trs) {
-      const o = e.quaternion.toArray(), c = e.position.toArray(), f = e.scale.toArray();
-      O(o, [0, 0, 0, 1]) || (i.rotation = o), O(c, [0, 0, 0]) || (i.translation = c), O(f, [1, 1, 1]) || (i.scale = f);
+      const o = e.quaternion.toArray(), c = e.position.toArray(), u = e.scale.toArray();
+      O(o, [0, 0, 0, 1]) || (r.rotation = o), O(c, [0, 0, 0]) || (r.translation = c), O(u, [1, 1, 1]) || (r.scale = u);
     } else
-      e.matrixAutoUpdate && e.updateMatrix(), Oe(e.matrix) === !1 && (i.matrix = e.matrix.elements);
-    if (e.name !== "" && (i.name = String(e.name)), this.serializeUserData(e, i), e.isMesh || e.isLine || e.isPoints) {
+      e.matrixAutoUpdate && e.updateMatrix(), ze(e.matrix) === !1 && (r.matrix = e.matrix.elements);
+    if (e.name !== "" && (r.name = String(e.name)), this.serializeUserData(e, r), e.isMesh || e.isLine || e.isPoints) {
       const o = await this.processMeshAsync(e);
-      o !== null && (i.mesh = o);
-    } else e.isCamera && (i.camera = this.processCamera(e));
+      o !== null && (r.mesh = o);
+    } else e.isCamera && (r.camera = this.processCamera(e));
     if (e.isSkinnedMesh && this.skins.push(e), e.children.length > 0) {
       const o = [];
-      for (let c = 0, f = e.children.length; c < f; c++) {
-        const x = e.children[c];
-        if (x.visible || n.onlyVisible === !1) {
-          const u = await this.processNodeAsync(x);
-          u !== null && o.push(u);
+      for (let c = 0, u = e.children.length; c < u; c++) {
+        const d = e.children[c];
+        if (d.visible || n.onlyVisible === !1) {
+          const l = await this.processNodeAsync(d);
+          l !== null && o.push(l);
         }
       }
-      o.length > 0 && (i.children = o);
+      o.length > 0 && (r.children = o);
     }
     await this._invokeAllAsync(function(o) {
-      o.writeNode && o.writeNode(e, i);
+      o.writeNode && o.writeNode(e, r);
     });
-    const r = t.nodes.push(i) - 1;
-    return s.set(e, r), r;
+    const i = t.nodes.push(r) - 1;
+    return s.set(e, i), i;
   }
   /**
    * Process Scene
@@ -892,22 +892,22 @@ class ze {
     t.scenes || (t.scenes = [], t.scene = 0);
     const s = {};
     e.name !== "" && (s.name = e.name), t.scenes.push(s);
-    const i = [];
-    for (let r = 0, o = e.children.length; r < o; r++) {
-      const c = e.children[r];
+    const r = [];
+    for (let i = 0, o = e.children.length; i < o; i++) {
+      const c = e.children[i];
       if (c.visible || n.onlyVisible === !1) {
-        const f = await this.processNodeAsync(c);
-        f !== null && i.push(f);
+        const u = await this.processNodeAsync(c);
+        u !== null && r.push(u);
       }
     }
-    i.length > 0 && (s.nodes = i), this.serializeUserData(e, s);
+    r.length > 0 && (s.nodes = r), this.serializeUserData(e, s);
   }
   /**
    * Creates a Scene to hold a list of objects and parse it
    * @param  {Array<THREE.Object3D>} objects List of objects to process
    */
   async processObjectsAsync(e) {
-    const t = new K();
+    const t = new W();
     t.name = "AuxScene";
     for (let n = 0; n < e.length; n++)
       t.children.push(e[n]);
@@ -923,7 +923,7 @@ class ze {
     });
     const n = [];
     for (let s = 0; s < e.length; s++)
-      e[s] instanceof K ? await this.processSceneAsync(e[s]) : n.push(e[s]);
+      e[s] instanceof W ? await this.processSceneAsync(e[s]) : n.push(e[s]);
     n.length > 0 && await this.processObjectsAsync(n);
     for (let s = 0; s < this.skins.length; ++s)
       this.processSkin(this.skins[s]);
@@ -938,7 +938,7 @@ class ze {
       await e(this.plugins[t]);
   }
 }
-class Be {
+class De {
   constructor(e) {
     this.writer = e, this.name = "KHR_lights_punctual";
   }
@@ -948,13 +948,13 @@ class Be {
       console.warn("THREE.GLTFExporter: Only directional, point, and spot lights are supported.", e);
       return;
     }
-    const n = this.writer, s = n.json, i = n.extensionsUsed, r = {};
-    e.name && (r.name = e.name), r.color = e.color.toArray(), r.intensity = e.intensity, e.isDirectionalLight ? r.type = "directional" : e.isPointLight ? (r.type = "point", e.distance > 0 && (r.range = e.distance)) : e.isSpotLight && (r.type = "spot", e.distance > 0 && (r.range = e.distance), r.spot = {}, r.spot.innerConeAngle = (1 - e.penumbra) * e.angle, r.spot.outerConeAngle = e.angle), e.decay !== void 0 && e.decay !== 2 && console.warn("THREE.GLTFExporter: Light decay may be lost. glTF is physically-based, and expects light.decay=2."), e.target && (e.target.parent !== e || e.target.position.x !== 0 || e.target.position.y !== 0 || e.target.position.z !== -1) && console.warn("THREE.GLTFExporter: Light direction may be lost. For best results, make light.target a child of the light with position 0,0,-1."), i[this.name] || (s.extensions = s.extensions || {}, s.extensions[this.name] = { lights: [] }, i[this.name] = !0);
+    const n = this.writer, s = n.json, r = n.extensionsUsed, i = {};
+    e.name && (i.name = e.name), i.color = e.color.toArray(), i.intensity = e.intensity, e.isDirectionalLight ? i.type = "directional" : e.isPointLight ? (i.type = "point", e.distance > 0 && (i.range = e.distance)) : e.isSpotLight && (i.type = "spot", e.distance > 0 && (i.range = e.distance), i.spot = {}, i.spot.innerConeAngle = (1 - e.penumbra) * e.angle, i.spot.outerConeAngle = e.angle), e.decay !== void 0 && e.decay !== 2 && console.warn("THREE.GLTFExporter: Light decay may be lost. glTF is physically-based, and expects light.decay=2."), e.target && (e.target.parent !== e || e.target.position.x !== 0 || e.target.position.y !== 0 || e.target.position.z !== -1) && console.warn("THREE.GLTFExporter: Light direction may be lost. For best results, make light.target a child of the light with position 0,0,-1."), r[this.name] || (s.extensions = s.extensions || {}, s.extensions[this.name] = { lights: [] }, r[this.name] = !0);
     const o = s.extensions[this.name].lights;
-    o.push(r), t.extensions = t.extensions || {}, t.extensions[this.name] = { light: o.length - 1 };
+    o.push(i), t.extensions = t.extensions || {}, t.extensions[this.name] = { light: o.length - 1 };
   }
 }
-class Ge {
+class ke {
   constructor(e) {
     this.writer = e, this.name = "KHR_materials_unlit";
   }
@@ -964,286 +964,286 @@ class Ge {
     t.extensions = t.extensions || {}, t.extensions[this.name] = {}, s[this.name] = !0, t.pbrMetallicRoughness.metallicFactor = 0, t.pbrMetallicRoughness.roughnessFactor = 0.9;
   }
 }
-class De {
+class Pe {
   constructor(e) {
     this.writer = e, this.name = "KHR_materials_clearcoat";
   }
   async writeMaterialAsync(e, t) {
     if (!e.isMeshPhysicalMaterial || e.clearcoat === 0) return;
-    const n = this.writer, s = n.extensionsUsed, i = {};
-    if (i.clearcoatFactor = e.clearcoat, e.clearcoatMap) {
-      const r = {
+    const n = this.writer, s = n.extensionsUsed, r = {};
+    if (r.clearcoatFactor = e.clearcoat, e.clearcoatMap) {
+      const i = {
         index: await n.processTextureAsync(e.clearcoatMap),
         texCoord: e.clearcoatMap.channel
       };
-      n.applyTextureTransform(r, e.clearcoatMap), i.clearcoatTexture = r;
+      n.applyTextureTransform(i, e.clearcoatMap), r.clearcoatTexture = i;
     }
-    if (i.clearcoatRoughnessFactor = e.clearcoatRoughness, e.clearcoatRoughnessMap) {
-      const r = {
+    if (r.clearcoatRoughnessFactor = e.clearcoatRoughness, e.clearcoatRoughnessMap) {
+      const i = {
         index: await n.processTextureAsync(e.clearcoatRoughnessMap),
         texCoord: e.clearcoatRoughnessMap.channel
       };
-      n.applyTextureTransform(r, e.clearcoatRoughnessMap), i.clearcoatRoughnessTexture = r;
+      n.applyTextureTransform(i, e.clearcoatRoughnessMap), r.clearcoatRoughnessTexture = i;
     }
     if (e.clearcoatNormalMap) {
-      const r = {
+      const i = {
         index: await n.processTextureAsync(e.clearcoatNormalMap),
         texCoord: e.clearcoatNormalMap.channel
       };
-      e.clearcoatNormalScale.x !== 1 && (r.scale = e.clearcoatNormalScale.x), n.applyTextureTransform(r, e.clearcoatNormalMap), i.clearcoatNormalTexture = r;
+      e.clearcoatNormalScale.x !== 1 && (i.scale = e.clearcoatNormalScale.x), n.applyTextureTransform(i, e.clearcoatNormalMap), r.clearcoatNormalTexture = i;
     }
-    t.extensions = t.extensions || {}, t.extensions[this.name] = i, s[this.name] = !0;
+    t.extensions = t.extensions || {}, t.extensions[this.name] = r, s[this.name] = !0;
   }
 }
-class Pe {
+class He {
   constructor(e) {
     this.writer = e, this.name = "KHR_materials_dispersion";
   }
   async writeMaterialAsync(e, t) {
     if (!e.isMeshPhysicalMaterial || e.dispersion === 0) return;
-    const s = this.writer.extensionsUsed, i = {};
-    i.dispersion = e.dispersion, t.extensions = t.extensions || {}, t.extensions[this.name] = i, s[this.name] = !0;
+    const s = this.writer.extensionsUsed, r = {};
+    r.dispersion = e.dispersion, t.extensions = t.extensions || {}, t.extensions[this.name] = r, s[this.name] = !0;
   }
 }
-class ke {
+class Ve {
   constructor(e) {
     this.writer = e, this.name = "KHR_materials_iridescence";
   }
   async writeMaterialAsync(e, t) {
     if (!e.isMeshPhysicalMaterial || e.iridescence === 0) return;
-    const n = this.writer, s = n.extensionsUsed, i = {};
-    if (i.iridescenceFactor = e.iridescence, e.iridescenceMap) {
-      const r = {
+    const n = this.writer, s = n.extensionsUsed, r = {};
+    if (r.iridescenceFactor = e.iridescence, e.iridescenceMap) {
+      const i = {
         index: await n.processTextureAsync(e.iridescenceMap),
         texCoord: e.iridescenceMap.channel
       };
-      n.applyTextureTransform(r, e.iridescenceMap), i.iridescenceTexture = r;
+      n.applyTextureTransform(i, e.iridescenceMap), r.iridescenceTexture = i;
     }
-    if (i.iridescenceIor = e.iridescenceIOR, i.iridescenceThicknessMinimum = e.iridescenceThicknessRange[0], i.iridescenceThicknessMaximum = e.iridescenceThicknessRange[1], e.iridescenceThicknessMap) {
-      const r = {
+    if (r.iridescenceIor = e.iridescenceIOR, r.iridescenceThicknessMinimum = e.iridescenceThicknessRange[0], r.iridescenceThicknessMaximum = e.iridescenceThicknessRange[1], e.iridescenceThicknessMap) {
+      const i = {
         index: await n.processTextureAsync(e.iridescenceThicknessMap),
         texCoord: e.iridescenceThicknessMap.channel
       };
-      n.applyTextureTransform(r, e.iridescenceThicknessMap), i.iridescenceThicknessTexture = r;
+      n.applyTextureTransform(i, e.iridescenceThicknessMap), r.iridescenceThicknessTexture = i;
     }
-    t.extensions = t.extensions || {}, t.extensions[this.name] = i, s[this.name] = !0;
+    t.extensions = t.extensions || {}, t.extensions[this.name] = r, s[this.name] = !0;
   }
 }
-class He {
+class je {
   constructor(e) {
     this.writer = e, this.name = "KHR_materials_transmission";
   }
   async writeMaterialAsync(e, t) {
     if (!e.isMeshPhysicalMaterial || e.transmission === 0) return;
-    const n = this.writer, s = n.extensionsUsed, i = {};
-    if (i.transmissionFactor = e.transmission, e.transmissionMap) {
-      const r = {
+    const n = this.writer, s = n.extensionsUsed, r = {};
+    if (r.transmissionFactor = e.transmission, e.transmissionMap) {
+      const i = {
         index: await n.processTextureAsync(e.transmissionMap),
         texCoord: e.transmissionMap.channel
       };
-      n.applyTextureTransform(r, e.transmissionMap), i.transmissionTexture = r;
+      n.applyTextureTransform(i, e.transmissionMap), r.transmissionTexture = i;
     }
-    t.extensions = t.extensions || {}, t.extensions[this.name] = i, s[this.name] = !0;
+    t.extensions = t.extensions || {}, t.extensions[this.name] = r, s[this.name] = !0;
   }
 }
-class Ve {
+class Ye {
   constructor(e) {
     this.writer = e, this.name = "KHR_materials_volume";
   }
   async writeMaterialAsync(e, t) {
     if (!e.isMeshPhysicalMaterial || e.transmission === 0) return;
-    const n = this.writer, s = n.extensionsUsed, i = {};
-    if (i.thicknessFactor = e.thickness, e.thicknessMap) {
-      const r = {
+    const n = this.writer, s = n.extensionsUsed, r = {};
+    if (r.thicknessFactor = e.thickness, e.thicknessMap) {
+      const i = {
         index: await n.processTextureAsync(e.thicknessMap),
         texCoord: e.thicknessMap.channel
       };
-      n.applyTextureTransform(r, e.thicknessMap), i.thicknessTexture = r;
+      n.applyTextureTransform(i, e.thicknessMap), r.thicknessTexture = i;
     }
-    e.attenuationDistance !== 1 / 0 && (i.attenuationDistance = e.attenuationDistance), i.attenuationColor = e.attenuationColor.toArray(), t.extensions = t.extensions || {}, t.extensions[this.name] = i, s[this.name] = !0;
+    e.attenuationDistance !== 1 / 0 && (r.attenuationDistance = e.attenuationDistance), r.attenuationColor = e.attenuationColor.toArray(), t.extensions = t.extensions || {}, t.extensions[this.name] = r, s[this.name] = !0;
   }
 }
-class je {
+class Ke {
   constructor(e) {
     this.writer = e, this.name = "KHR_materials_ior";
   }
   async writeMaterialAsync(e, t) {
     if (!e.isMeshPhysicalMaterial || e.ior === 1.5) return;
-    const s = this.writer.extensionsUsed, i = {};
-    i.ior = e.ior, t.extensions = t.extensions || {}, t.extensions[this.name] = i, s[this.name] = !0;
+    const s = this.writer.extensionsUsed, r = {};
+    r.ior = e.ior, t.extensions = t.extensions || {}, t.extensions[this.name] = r, s[this.name] = !0;
   }
 }
-class Ye {
+class We {
   constructor(e) {
     this.writer = e, this.name = "KHR_materials_specular";
   }
   async writeMaterialAsync(e, t) {
-    if (!e.isMeshPhysicalMaterial || e.specularIntensity === 1 && e.specularColor.equals(Se) && !e.specularIntensityMap && !e.specularColorMap) return;
-    const n = this.writer, s = n.extensionsUsed, i = {};
+    if (!e.isMeshPhysicalMaterial || e.specularIntensity === 1 && e.specularColor.equals(_e) && !e.specularIntensityMap && !e.specularColorMap) return;
+    const n = this.writer, s = n.extensionsUsed, r = {};
     if (e.specularIntensityMap) {
-      const r = {
+      const i = {
         index: await n.processTextureAsync(e.specularIntensityMap),
         texCoord: e.specularIntensityMap.channel
       };
-      n.applyTextureTransform(r, e.specularIntensityMap), i.specularTexture = r;
+      n.applyTextureTransform(i, e.specularIntensityMap), r.specularTexture = i;
     }
     if (e.specularColorMap) {
-      const r = {
+      const i = {
         index: await n.processTextureAsync(e.specularColorMap),
         texCoord: e.specularColorMap.channel
       };
-      n.applyTextureTransform(r, e.specularColorMap), i.specularColorTexture = r;
+      n.applyTextureTransform(i, e.specularColorMap), r.specularColorTexture = i;
     }
-    i.specularFactor = e.specularIntensity, i.specularColorFactor = e.specularColor.toArray(), t.extensions = t.extensions || {}, t.extensions[this.name] = i, s[this.name] = !0;
+    r.specularFactor = e.specularIntensity, r.specularColorFactor = e.specularColor.toArray(), t.extensions = t.extensions || {}, t.extensions[this.name] = r, s[this.name] = !0;
   }
 }
-class Ke {
+class qe {
   constructor(e) {
     this.writer = e, this.name = "KHR_materials_sheen";
   }
   async writeMaterialAsync(e, t) {
     if (!e.isMeshPhysicalMaterial || e.sheen == 0) return;
-    const n = this.writer, s = n.extensionsUsed, i = {};
+    const n = this.writer, s = n.extensionsUsed, r = {};
     if (e.sheenRoughnessMap) {
-      const r = {
+      const i = {
         index: await n.processTextureAsync(e.sheenRoughnessMap),
         texCoord: e.sheenRoughnessMap.channel
       };
-      n.applyTextureTransform(r, e.sheenRoughnessMap), i.sheenRoughnessTexture = r;
+      n.applyTextureTransform(i, e.sheenRoughnessMap), r.sheenRoughnessTexture = i;
     }
     if (e.sheenColorMap) {
-      const r = {
+      const i = {
         index: await n.processTextureAsync(e.sheenColorMap),
         texCoord: e.sheenColorMap.channel
       };
-      n.applyTextureTransform(r, e.sheenColorMap), i.sheenColorTexture = r;
+      n.applyTextureTransform(i, e.sheenColorMap), r.sheenColorTexture = i;
     }
-    i.sheenRoughnessFactor = e.sheenRoughness, i.sheenColorFactor = e.sheenColor.toArray(), t.extensions = t.extensions || {}, t.extensions[this.name] = i, s[this.name] = !0;
+    r.sheenRoughnessFactor = e.sheenRoughness, r.sheenColorFactor = e.sheenColor.toArray(), t.extensions = t.extensions || {}, t.extensions[this.name] = r, s[this.name] = !0;
   }
 }
-class We {
+class Xe {
   constructor(e) {
     this.writer = e, this.name = "KHR_materials_anisotropy";
   }
   async writeMaterialAsync(e, t) {
     if (!e.isMeshPhysicalMaterial || e.anisotropy == 0) return;
-    const n = this.writer, s = n.extensionsUsed, i = {};
+    const n = this.writer, s = n.extensionsUsed, r = {};
     if (e.anisotropyMap) {
-      const r = { index: await n.processTextureAsync(e.anisotropyMap) };
-      n.applyTextureTransform(r, e.anisotropyMap), i.anisotropyTexture = r;
+      const i = { index: await n.processTextureAsync(e.anisotropyMap) };
+      n.applyTextureTransform(i, e.anisotropyMap), r.anisotropyTexture = i;
     }
-    i.anisotropyStrength = e.anisotropy, i.anisotropyRotation = e.anisotropyRotation, t.extensions = t.extensions || {}, t.extensions[this.name] = i, s[this.name] = !0;
+    r.anisotropyStrength = e.anisotropy, r.anisotropyRotation = e.anisotropyRotation, t.extensions = t.extensions || {}, t.extensions[this.name] = r, s[this.name] = !0;
   }
 }
-class qe {
+class Je {
   constructor(e) {
     this.writer = e, this.name = "KHR_materials_emissive_strength";
   }
   async writeMaterialAsync(e, t) {
     if (!e.isMeshStandardMaterial || e.emissiveIntensity === 1) return;
-    const s = this.writer.extensionsUsed, i = {};
-    i.emissiveStrength = e.emissiveIntensity, t.extensions = t.extensions || {}, t.extensions[this.name] = i, s[this.name] = !0;
+    const s = this.writer.extensionsUsed, r = {};
+    r.emissiveStrength = e.emissiveIntensity, t.extensions = t.extensions || {}, t.extensions[this.name] = r, s[this.name] = !0;
   }
 }
-class Xe {
+class Ze {
   constructor(e) {
     this.writer = e, this.name = "EXT_materials_bump";
   }
   async writeMaterialAsync(e, t) {
     if (!e.isMeshStandardMaterial || e.bumpScale === 1 && !e.bumpMap) return;
-    const n = this.writer, s = n.extensionsUsed, i = {};
+    const n = this.writer, s = n.extensionsUsed, r = {};
     if (e.bumpMap) {
-      const r = {
+      const i = {
         index: await n.processTextureAsync(e.bumpMap),
         texCoord: e.bumpMap.channel
       };
-      n.applyTextureTransform(r, e.bumpMap), i.bumpTexture = r;
+      n.applyTextureTransform(i, e.bumpMap), r.bumpTexture = i;
     }
-    i.bumpFactor = e.bumpScale, t.extensions = t.extensions || {}, t.extensions[this.name] = i, s[this.name] = !0;
+    r.bumpFactor = e.bumpScale, t.extensions = t.extensions || {}, t.extensions[this.name] = r, s[this.name] = !0;
   }
 }
-class Je {
+class $e {
   constructor(e) {
     this.writer = e, this.name = "EXT_mesh_gpu_instancing";
   }
   writeNode(e, t) {
     if (!e.isInstancedMesh) return;
-    const n = this.writer, s = e, i = new Float32Array(s.count * 3), r = new Float32Array(s.count * 4), o = new Float32Array(s.count * 3), c = new $(), f = new z(), x = new le(), u = new z();
-    for (let l = 0; l < s.count; l++)
-      s.getMatrixAt(l, c), c.decompose(f, x, u), f.toArray(i, l * 3), x.toArray(r, l * 4), u.toArray(o, l * 3);
+    const n = this.writer, s = e, r = new Float32Array(s.count * 3), i = new Float32Array(s.count * 4), o = new Float32Array(s.count * 3), c = new ee(), u = new z(), d = new fe(), l = new z();
+    for (let f = 0; f < s.count; f++)
+      s.getMatrixAt(f, c), c.decompose(u, d, l), u.toArray(r, f * 3), d.toArray(i, f * 4), l.toArray(o, f * 3);
     const T = {
-      TRANSLATION: n.processAccessor(new L(i, 3)),
-      ROTATION: n.processAccessor(new L(r, 4)),
-      SCALE: n.processAccessor(new L(o, 3))
+      TRANSLATION: n.processAccessor(new _(r, 3)),
+      ROTATION: n.processAccessor(new _(i, 4)),
+      SCALE: n.processAccessor(new _(o, 3))
     };
     s.instanceColor && (T._COLOR_0 = n.processAccessor(s.instanceColor)), t.extensions = t.extensions || {}, t.extensions[this.name] = { attributes: T }, n.extensionsUsed[this.name] = !0, n.extensionsRequired[this.name] = !0;
   }
 }
 G.Utils = {
   insertKeyframe: function(a, e) {
-    const n = a.getValueSize(), s = new a.TimeBufferType(a.times.length + 1), i = new a.ValueBufferType(a.values.length + n), r = a.createInterpolant(new a.ValueBufferType(n));
+    const n = a.getValueSize(), s = new a.TimeBufferType(a.times.length + 1), r = new a.ValueBufferType(a.values.length + n), i = a.createInterpolant(new a.ValueBufferType(n));
     let o;
     if (a.times.length === 0) {
       s[0] = e;
       for (let c = 0; c < n; c++)
-        i[c] = 0;
+        r[c] = 0;
       o = 0;
     } else if (e < a.times[0]) {
       if (Math.abs(a.times[0] - e) < 1e-3) return 0;
-      s[0] = e, s.set(a.times, 1), i.set(r.evaluate(e), 0), i.set(a.values, n), o = 0;
+      s[0] = e, s.set(a.times, 1), r.set(i.evaluate(e), 0), r.set(a.values, n), o = 0;
     } else if (e > a.times[a.times.length - 1]) {
       if (Math.abs(a.times[a.times.length - 1] - e) < 1e-3)
         return a.times.length - 1;
-      s[s.length - 1] = e, s.set(a.times, 0), i.set(a.values, 0), i.set(r.evaluate(e), a.values.length), o = s.length - 1;
+      s[s.length - 1] = e, s.set(a.times, 0), r.set(a.values, 0), r.set(i.evaluate(e), a.values.length), o = s.length - 1;
     } else
       for (let c = 0; c < a.times.length; c++) {
         if (Math.abs(a.times[c] - e) < 1e-3) return c;
         if (a.times[c] < e && a.times[c + 1] > e) {
-          s.set(a.times.slice(0, c + 1), 0), s[c + 1] = e, s.set(a.times.slice(c + 1), c + 2), i.set(a.values.slice(0, (c + 1) * n), 0), i.set(r.evaluate(e), (c + 1) * n), i.set(a.values.slice((c + 1) * n), (c + 2) * n), o = c + 1;
+          s.set(a.times.slice(0, c + 1), 0), s[c + 1] = e, s.set(a.times.slice(c + 1), c + 2), r.set(a.values.slice(0, (c + 1) * n), 0), r.set(i.evaluate(e), (c + 1) * n), r.set(a.values.slice((c + 1) * n), (c + 2) * n), o = c + 1;
           break;
         }
       }
-    return a.times = s, a.values = i, o;
+    return a.times = s, a.values = r, o;
   },
   mergeMorphTargetTracks: function(a, e) {
     const t = [], n = {}, s = a.tracks;
-    for (let i = 0; i < s.length; ++i) {
-      let r = s[i];
-      const o = B.parseTrackName(r.name), c = B.findNode(e, o.nodeName);
+    for (let r = 0; r < s.length; ++r) {
+      let i = s[r];
+      const o = B.parseTrackName(i.name), c = B.findNode(e, o.nodeName);
       if (o.propertyName !== "morphTargetInfluences" || o.propertyIndex === void 0) {
-        t.push(r);
+        t.push(i);
         continue;
       }
-      if (r.createInterpolant !== r.InterpolantFactoryMethodDiscrete && r.createInterpolant !== r.InterpolantFactoryMethodLinear) {
-        if (r.createInterpolant.isInterpolantFactoryMethodGLTFCubicSpline)
+      if (i.createInterpolant !== i.InterpolantFactoryMethodDiscrete && i.createInterpolant !== i.InterpolantFactoryMethodLinear) {
+        if (i.createInterpolant.isInterpolantFactoryMethodGLTFCubicSpline)
           throw new Error("THREE.GLTFExporter: Cannot merge tracks with glTF CUBICSPLINE interpolation.");
-        console.warn("THREE.GLTFExporter: Morph target interpolation mode not yet supported. Using LINEAR instead."), r = r.clone(), r.setInterpolation(be);
+        console.warn("THREE.GLTFExporter: Morph target interpolation mode not yet supported. Using LINEAR instead."), i = i.clone(), i.setInterpolation(Ne);
       }
-      const f = c.morphTargetInfluences.length, x = c.morphTargetDictionary[o.propertyIndex];
-      if (x === void 0)
+      const u = c.morphTargetInfluences.length, d = c.morphTargetDictionary[o.propertyIndex];
+      if (d === void 0)
         throw new Error("THREE.GLTFExporter: Morph target name not found: " + o.propertyIndex);
-      let u;
+      let l;
       if (n[c.uuid] === void 0) {
-        u = r.clone();
-        const l = new u.ValueBufferType(f * u.times.length);
-        for (let p = 0; p < u.times.length; p++)
-          l[p * f + x] = u.values[p];
-        u.name = (o.nodeName || "") + ".morphTargetInfluences", u.values = l, n[c.uuid] = u, t.push(u);
+        l = i.clone();
+        const f = new l.ValueBufferType(u * l.times.length);
+        for (let x = 0; x < l.times.length; x++)
+          f[x * u + d] = l.values[x];
+        l.name = (o.nodeName || "") + ".morphTargetInfluences", l.values = f, n[c.uuid] = l, t.push(l);
         continue;
       }
-      const T = r.createInterpolant(new r.ValueBufferType(1));
-      u = n[c.uuid];
-      for (let l = 0; l < u.times.length; l++)
-        u.values[l * f + x] = T.evaluate(u.times[l]);
-      for (let l = 0; l < r.times.length; l++) {
-        const p = this.insertKeyframe(u, r.times[l]);
-        u.values[p * f + x] = r.values[l];
+      const T = i.createInterpolant(new i.ValueBufferType(1));
+      l = n[c.uuid];
+      for (let f = 0; f < l.times.length; f++)
+        l.values[f * u + d] = T.evaluate(l.times[f]);
+      for (let f = 0; f < i.times.length; f++) {
+        const x = this.insertKeyframe(l, i.times[f]);
+        l.values[x * u + d] = i.values[f];
       }
     }
     return a.tracks = t, a;
   },
   toFloat32BufferAttribute: function(a) {
-    const e = new L(new Float32Array(a.count * a.itemSize), a.itemSize, !1);
+    const e = new _(new Float32Array(a.count * a.itemSize), a.itemSize, !1);
     if (!a.normalized && !a.isInterleavedBufferAttribute)
       return e.array.set(a.array), e;
     for (let t = 0, n = a.count; t < n; t++)
@@ -1252,71 +1252,90 @@ G.Utils = {
     return e;
   }
 };
-const et = /* @__PURE__ */ se({
-  __name: "TerrainGenerator",
+const Qe = ne({
+  name: "TerrainGenerator",
   props: {
-    terrainSize: {},
-    segments: {},
-    heightScaling: {},
-    terrainColor: {},
-    backgroundColor: {},
-    noiseType: {},
-    texturePaths: {},
-    noiseScale: {}
+    terrainSize: { type: Number, default: 1e3 },
+    segments: { type: Number, default: 512 },
+    heightScaling: { type: Number, default: 80 },
+    terrainColor: { type: String, default: "#88cc88" },
+    backgroundColor: { type: String, default: "#000000" },
+    noiseType: { type: String, default: "simplex" },
+    noiseScale: { type: Number, default: 0.02 },
+    enableAnimation: { type: Boolean, default: !1 },
+    animationSpeed: { type: Number, default: 5e-3 }
   },
-  setup(a) {
-    const e = a, t = ne(null);
-    let n, s, i, r, o;
-    const c = /* @__PURE__ */ new Map(), f = new Ne();
-    function x(l) {
-      const p = l.attributes.position.array;
-      for (let h = 0; h < p.length; h += 3) {
-        const d = p[h] * e.noiseScale, w = p[h + 2] * e.noiseScale, E = f.noise2D(d, w);
-        p[h + 1] = E * e.heightScaling;
-      }
-      l.computeVertexNormals();
-    }
-    function u() {
-      const l = new S.MeshStandardMaterial({ color: e.terrainColor });
-      return Object.entries(e.texturePaths).forEach(([p, h]) => {
-        if (h && !c.has(h)) {
-          const w = new S.TextureLoader().load(h);
-          c.set(h, w);
-        }
-        c.has(h) && (p === "albedo" && (l.map = c.get(h)), p === "normal" && (l.normalMap = c.get(h)), p === "roughness" && (l.roughnessMap = c.get(h)));
-      }), l;
-    }
-    function T() {
-      new G().parse(n, (p) => {
-        const h = new Blob([JSON.stringify(p)], { type: "application/json" }), d = URL.createObjectURL(h), w = document.createElement("a");
-        w.style.display = "none", w.href = d, w.download = "random_terrain.gltf", document.body.appendChild(w), w.click(), document.body.removeChild(w);
+  setup(a, { expose: e }) {
+    const t = ie(null);
+    let n, s, r, i, o, c = new Le(), u = new N.Clock();
+    const d = () => {
+      new G().parse(n, (m) => {
+        const w = new Blob([JSON.stringify(m)], { type: "application/json" }), L = URL.createObjectURL(w), p = document.createElement("a");
+        p.style.display = "none", p.href = L, p.download = "random_terrain.gltf", document.body.appendChild(p), p.click(), document.body.removeChild(p);
       });
-    }
-    return ie(() => {
-      var w;
-      n = new S.Scene(), n.background = new S.Color(e.backgroundColor), s = new S.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1e3), s.position.set(0, 100, 200), i = new S.WebGLRenderer({ antialias: !0 }), i.setSize(window.innerWidth, window.innerHeight), (w = t.value) == null || w.appendChild(i.domElement);
-      const l = new S.PlaneGeometry(e.terrainSize, e.terrainSize, e.segments, e.segments);
-      l.rotateX(-Math.PI / 2), x(l);
-      const p = u();
-      r = new S.Mesh(l, p), n.add(r);
-      const h = new S.DirectionalLight(16777215, 1);
-      h.position.set(500, 500, 500).normalize(), n.add(h);
-      function d() {
-        o = requestAnimationFrame(d), i.render(n, s);
+    }, l = re({
+      terrainSize: a.terrainSize,
+      segments: a.segments,
+      heightScaling: a.heightScaling,
+      terrainColor: a.terrainColor,
+      backgroundColor: a.backgroundColor,
+      noiseType: a.noiseType,
+      noiseScale: a.noiseScale,
+      enableAnimation: a.enableAnimation,
+      animationSpeed: a.animationSpeed
+    }), T = (h) => {
+      const m = h.attributes.position.array;
+      for (let w = 0; w < m.length; w += 3) {
+        const L = m[w] * l.noiseScale, p = m[w + 2] * l.noiseScale, M = c.noise2D(L, p);
+        m[w + 1] = M * l.heightScaling;
       }
-      d();
-    }), re(() => {
-      cancelAnimationFrame(o), i.dispose(), c.clear();
-    }), (l, p) => (ae(), oe("div", null, [
-      Y("button", { onClick: T }, "Generate & Download Terrain"),
-      Y("div", {
-        ref_key: "threeContainer",
-        ref: t,
-        style: { width: "100%", height: "100vh" }
-      }, null, 512)
-    ]));
+      h.computeVertexNormals();
+    }, f = () => {
+      if (!t.value) return;
+      n = new N.Scene(), n.background = new N.Color(l.backgroundColor), s = new N.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1e3), s.position.set(0, 100, 200), r = new N.WebGLRenderer({ antialias: !0 }), r.setSize(window.innerWidth, window.innerHeight), t.value.appendChild(r.domElement);
+      const h = new N.PlaneGeometry(l.terrainSize, l.terrainSize, l.segments, l.segments);
+      h.rotateX(-Math.PI / 2), T(h);
+      const m = new N.MeshStandardMaterial({ color: l.terrainColor });
+      i = new N.Mesh(h, m), n.add(i);
+      const w = new N.DirectionalLight(16777215, 1);
+      w.position.set(500, 500, 500).normalize(), n.add(w), x();
+    }, x = () => {
+      if (l.enableAnimation) {
+        const h = u.getElapsedTime();
+        i.rotation.y += l.animationSpeed;
+        const m = i.geometry.attributes.position.array;
+        for (let w = 0; w < m.length; w += 3)
+          m[w + 1] = Math.sin(h + m[w] * 0.01 + m[w + 2] * 0.01) * 2;
+        i.geometry.attributes.position.needsUpdate = !0;
+      }
+      r.render(n, s), o = requestAnimationFrame(x);
+    }, g = async (h) => {
+      Object.assign(l, h), n.clear(), await Y(), f();
+    };
+    return oe(async () => {
+      await Y(), f();
+    }), ae(() => {
+      cancelAnimationFrame(o), r.dispose();
+    }), e({ updateSettings: g }), { threeContainer: t, downloadTerrain: d };
   }
-});
+}), et = (a, e) => {
+  const t = a.__vccOpts || a;
+  for (const [n, s] of e)
+    t[n] = s;
+  return t;
+}, tt = {
+  ref: "threeContainer",
+  style: { width: "100%", height: "100vh" }
+};
+function st(a, e, t, n, s, r) {
+  return le(), ce("div", null, [
+    K("button", {
+      onClick: e[0] || (e[0] = (...i) => a.downloadTerrain && a.downloadTerrain(...i))
+    }, "Generate & Download Terrain"),
+    K("div", tt, null, 512)
+  ]);
+}
+const ot = /* @__PURE__ */ et(Qe, [["render", st]]);
 export {
-  et as default
+  ot as default
 };
